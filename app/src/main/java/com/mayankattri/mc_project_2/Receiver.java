@@ -65,7 +65,7 @@ public class Receiver extends WakefulBroadcastReceiver {
         Intent intent = new Intent(context, Receiver.class);
         intent.putExtra("RingerAlarm", "Ringer");
         alarmIntent1 = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -79,6 +79,12 @@ public class Receiver extends WakefulBroadcastReceiver {
 
         alarmMgr1.setInexactRepeating(AlarmManager.RTC_WAKEUP,
                 calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent1);
+
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute+1);
+
+        alarmMgr1.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+                calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
     }
 
     public void setAlarmBrightness(Context context) {
