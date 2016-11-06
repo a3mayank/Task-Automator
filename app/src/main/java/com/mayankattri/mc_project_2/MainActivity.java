@@ -14,6 +14,7 @@ import android.util.Log;
 import android.view.View;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.CompoundButton;
 import android.widget.ToggleButton;
 
 import java.util.ArrayList;
@@ -38,10 +39,13 @@ public class MainActivity extends AppCompatActivity {
 
         ToggleButton tb = (ToggleButton) findViewById(R.id.toggleButton2);
 
-        tb.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                tbValue = 1;
+        tb.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+            public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                if (isChecked) {
+                    tbValue = 1;
+                } else {
+                    tbValue = 0;
+                }
             }
         });
 
@@ -82,6 +86,13 @@ public class MainActivity extends AppCompatActivity {
             public void onClick(View view) {
                 Intent intent = new Intent(MainActivity.this, SmsSchedulingAcivity.class);
                 startActivity(intent);
+            }
+        });
+        unmute.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+//                Intent intent = new Intent(MainActivity.this, SmsSchedulingAcivity.class);
+//                startActivity(intent);
             }
         });
     }
