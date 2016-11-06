@@ -49,6 +49,10 @@ public class Service extends IntentService {
             SMS(intent);
             System.out.println("SMSService");
         }
+        if(intent.getStringExtra("UnmuteAlarm") != null && intent.getStringExtra("UnmuteAlarm").equals("Unmute")) {
+            Unmute(intent);
+            System.out.println("UnmuteService");
+        }
     }
 
     public void ringer(Intent intent) {
@@ -106,5 +110,9 @@ public class Service extends IntentService {
         smsManager.sendTextMessage(number, null, message, null, null);
 
         Receiver.completeWakefulIntent(intent);
+    }
+
+    public void Unmute(Intent intent) {
+
     }
 }

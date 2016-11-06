@@ -6,6 +6,7 @@
     <string name="action_brightness">Brightness Scheduling</string>
     <string name="action_geofencing">Geofencing Scheduling</string>
     <string name="action_weather">Weather</string>
+    <string name="action_readSMS">Read SMS</string>
 
     <string name="action_delete_all">Delete All Geofences</string>
 

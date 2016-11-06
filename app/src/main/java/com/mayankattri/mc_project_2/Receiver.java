@@ -4,7 +4,13 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.AudioManager;
+import android.os.Bundle;
 import android.support.v4.content.WakefulBroadcastReceiver;
+import android.telephony.SmsManager;
+import android.telephony.SmsMessage;
+import android.util.Log;
+import android.widget.Toast;
 
 import java.util.Calendar;
 
@@ -16,10 +22,12 @@ public class Receiver extends WakefulBroadcastReceiver {
     private AlarmManager alarmMgr1;
     private AlarmManager alarmMgrBrightness;
     private AlarmManager alarmMgrSMS;
+    private SmsManager alarmMgrUnmute;
     // The pending intent that is triggered when the alarm fires.
     private PendingIntent alarmIntent1;
     private PendingIntent alarmIntentBrightness;
     private PendingIntent alarmIntentSMS;
+    private PendingIntent alarmIntentUnmute;
 
     @Override
     public void onReceive(Context context, Intent intent) {

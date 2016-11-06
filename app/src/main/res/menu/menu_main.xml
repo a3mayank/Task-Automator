@@ -45,4 +45,10 @@
         android:title="@string/action_weather"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/MI_readSMS"
+        android:orderInCategory="600"
+        android:title="@string/action_readSMS"
+        app:showAsAction="never" />
+
 </menu>
