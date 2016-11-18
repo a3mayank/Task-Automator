@@ -15,6 +15,7 @@ import android.widget.Toast;
 public class SmsReceiver extends BroadcastReceiver {
 
     public static final String SMS_EXTRA_NAME = "pdus";
+    public static AudioManager audioManager;
 
     public void onReceive(Context context, Intent intent) {
         // Get SMS map from Intent
@@ -39,10 +40,9 @@ public class SmsReceiver extends BroadcastReceiver {
                 messages += body + "\n";
 
                 // Here you can add any your code to work with incoming SMS
-                if (body.contains("FIND MY PHONE") && MainActivity.tbValue == 1) {
-                    AudioManager audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
+                if (body.contains("FIND MY PHONE") && MainActivity.tb2Value == 1) {
+                    audioManager = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
                     audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
-                    Receiver.completeWakefulIntent(intent);
                 }
             }
 

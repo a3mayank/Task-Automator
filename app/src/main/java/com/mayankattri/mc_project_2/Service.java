@@ -49,9 +49,9 @@ public class Service extends IntentService {
             SMS(intent);
             System.out.println("SMSService");
         }
-        if(intent.getStringExtra("UnmuteAlarm") != null && intent.getStringExtra("UnmuteAlarm").equals("Unmute")) {
-            Unmute(intent);
-            System.out.println("UnmuteService");
+        if(intent.getStringExtra("CalendarAlarm") != null && intent.getStringExtra("CalendarAlarm").equals("Calendar")) {
+            Calendar(intent);
+            System.out.println("CalendarService");
         }
     }
 
@@ -112,7 +112,9 @@ public class Service extends IntentService {
         Receiver.completeWakefulIntent(intent);
     }
 
-    public void Unmute(Intent intent) {
-
+    public void Calendar(Intent intent) {
+        AudioManager audioManager = (AudioManager) getSystemService(AUDIO_SERVICE);
+        audioManager.setRingerMode(AudioManager.RINGER_MODE_VIBRATE);
+        Receiver.completeWakefulIntent(intent);
     }
 }

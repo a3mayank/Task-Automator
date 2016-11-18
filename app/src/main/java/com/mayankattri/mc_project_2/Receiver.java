@@ -12,7 +12,11 @@ import android.telephony.SmsMessage;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
+import java.util.TimeZone;
 
 /**
  * Created by mayank on 22/10/16.
@@ -22,11 +26,13 @@ public class Receiver extends WakefulBroadcastReceiver {
     private AlarmManager alarmMgr1;
     private AlarmManager alarmMgrBrightness;
     private AlarmManager alarmMgrSMS;
+    private AlarmManager alarmMgrCalendar;
     private SmsManager alarmMgrUnmute;
     // The pending intent that is triggered when the alarm fires.
     private PendingIntent alarmIntent1;
     private PendingIntent alarmIntentBrightness;
     private PendingIntent alarmIntentSMS;
+    private PendingIntent alarmIntentCalendar;
     private PendingIntent alarmIntentUnmute;
 
     @Override
@@ -65,6 +71,11 @@ public class Receiver extends WakefulBroadcastReceiver {
             serviceSMS.putExtra("SMSAlarm", "SMS");
             startWakefulService(context, serviceSMS);
         }
+        if(intent.getStringExtra("CalendarAlarm") != null && intent.getStringExtra("CalendarAlarm").equals("Calendar")) {
+            Intent serviceCalendar = new Intent(context, Service.class);
+            serviceCalendar.putExtra("CalendarAlarm", "Calendar");
+            startWakefulService(context, serviceCalendar);
+        }
         // END_INCLUDE(alarm_onreceive)
     }
 
@@ -73,7 +84,6 @@ public class Receiver extends WakefulBroadcastReceiver {
         Intent intent = new Intent(context, Receiver.class);
         intent.putExtra("RingerAlarm", "Ringer");
         alarmIntent1 = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -81,18 +91,34 @@ public class Receiver extends WakefulBroadcastReceiver {
         int hour = Integer.parseInt(RingerSchedulingActivity.getHour());
         int minute = Integer.parseInt(RingerSchedulingActivity.getMinute());
 
-        // Set the alarm's trigger time to 8:30 a.m.
+//        ArrayList<Integer> hours = new ArrayList<>();
+//        ArrayList<Integer> minutes = new ArrayList<>();
+
+        // Set the alarm's trigger time.
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 5);
 
-        alarmMgr1.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent1);
+//        hours.add(hour);hours.add(hour);hours.add(hour);
+//        minutes.add(minute+1);minutes.add(minute+2);minutes.add(minute+3);
 
-        calendar.set(Calendar.HOUR_OF_DAY, hour);
-        calendar.set(Calendar.MINUTE, minute+1);
+//        alarmMgr1.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+//                calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent1);
 
-        alarmMgr1.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+        alarmMgr1.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent1);
+
+//        for(int i = 0; i < hours.size(); i++) {
+//            calendar.set(Calendar.HOUR_OF_DAY, hours.get(i));
+//            calendar.set(Calendar.MINUTE, minutes.get(i));
+//            calendar.set(Calendar.SECOND, 5);
+//
+//            PendingIntent alarmIntent = PendingIntent.getBroadcast(context, i+1, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+//
+////            alarmMgr1.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+////                    calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntent);
+//
+//            alarmMgr1.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+//        }
     }
 
     public void setAlarmBrightness(Context context) {
@@ -109,9 +135,12 @@ public class Receiver extends WakefulBroadcastReceiver {
 
         calendar.set(Calendar.HOUR_OF_DAY, 9);
         calendar.set(Calendar.MINUTE, 59);
+        calendar.set(Calendar.SECOND, 5);
 
-        alarmMgrBrightness.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntentBrightness);
+//        alarmMgrBrightness.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+//                calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntentBrightness);
+
+        alarmMgr1.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntentBrightness);
     }
 
     public void setAlarmSMS(Context context) {
@@ -130,6 +159,7 @@ public class Receiver extends WakefulBroadcastReceiver {
         // Set the alarm's trigger time to 8:30 a.m.
         calendar.set(Calendar.HOUR_OF_DAY, hour);
         calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 5);
 
         /*
          * If you don't have precise time requirements, use an inexact repeating alarm
@@ -164,8 +194,11 @@ public class Receiver extends WakefulBroadcastReceiver {
 
         // Set the alarm to fire at approximately 8:30 a.m., according to the device's
         // clock, and to repeat once a day.
-        alarmMgrSMS.setInexactRepeating(AlarmManager.RTC_WAKEUP,
-                calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntentSMS);
+
+//        alarmMgrSMS.setInexactRepeating(AlarmManager.RTC_WAKEUP,
+//                calendar.getTimeInMillis(), AlarmManager.INTERVAL_DAY, alarmIntentSMS);
+
+        alarmMgr1.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntentSMS);
 
         // Enable {@code SampleBootReceiver} to automatically restart the alarm when the
         // device is rebooted.
@@ -175,5 +208,58 @@ public class Receiver extends WakefulBroadcastReceiver {
 //        pm.setComponentEnabledSetting(receiver,
 //                PackageManager.COMPONENT_ENABLED_STATE_ENABLED,
 //                PackageManager.DONT_KILL_APP);
+    }
+
+    public void setAlarmCalendar(Context context, ArrayList<Long> unixtime) {
+        alarmMgrCalendar = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, Receiver.class);
+        intent.putExtra("CalendarAlarm", "Calendar");
+        alarmIntentCalendar = PendingIntent.getBroadcast(context, 3, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        Calendar calendar = Calendar.getInstance();
+
+        for(int i = 0; i < unixtime.size(); i++) {
+            Date date = new Date(unixtime.get(i));
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss z"); // the format of your date
+            sdf.setTimeZone(TimeZone.getTimeZone("GMT+5:30")); // give a timezone reference for formating (see comment at the bottom
+            String formattedDate = sdf.format(date);
+
+            String[] dt = formattedDate.split(" ");
+            String[] d = dt[0].split("-");
+            String[] t = dt[1].split(":");
+            int year = Integer.parseInt(d[0]);
+            int _month = Integer.parseInt(d[1]);
+            int day = Integer.parseInt(d[2]);
+            int hour = Integer.parseInt(t[0]);
+            int minute = Integer.parseInt(t[1]);
+            int month;
+            if(_month==1) month = Calendar.JANUARY;
+            else if(_month==2) month = Calendar.FEBRUARY;
+            else if(_month==3) month = Calendar.MARCH;
+            else if(_month==4) month = Calendar.APRIL;
+            else if(_month==5) month = Calendar.MAY;
+            else if(_month==6) month = Calendar.JUNE;
+            else if(_month==7) month = Calendar.JULY;
+            else if(_month==8) month = Calendar.AUGUST;
+            else if(_month==9) month = Calendar.SEPTEMBER;
+            else if(_month==10) month = Calendar.OCTOBER;
+            else if(_month==11) month = Calendar.NOVEMBER;
+            else month = Calendar.DECEMBER;
+            System.out.println(year+" "+month+" "+day+" "+hour+" "+minute);
+
+            // Set the alarm's trigger time.
+            calendar.set(Calendar.YEAR, year);
+            calendar.set(Calendar.MONTH, month);
+            calendar.set(Calendar.DAY_OF_MONTH, day);
+            calendar.set(Calendar.HOUR_OF_DAY, 3);
+            calendar.set(Calendar.MINUTE, 57);
+            calendar.set(Calendar.SECOND, 5);
+
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(context, i, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+            System.out.println(calendar.getTimeInMillis());
+
+            alarmMgrCalendar.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
+        }
     }
 }
