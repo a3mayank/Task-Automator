@@ -14,4 +14,9 @@
     <color name="TextColor.Black">#000000</color>
 
     <color name="Divider">#333333</color>
+
+
+    <color name="detail">#999999</color>
+    <color name="title">#ece7e7</color>
+    <color name="main_background">#8e8d8d</color>
 </resources>
