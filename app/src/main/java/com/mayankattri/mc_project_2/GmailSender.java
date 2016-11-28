@@ -18,7 +18,7 @@ import java.io.OutputStream;
 import java.security.Security;
 import java.util.Properties;
 
-class GMailSender extends javax.mail.Authenticator {
+class GmailSender extends javax.mail.Authenticator {
     private String mailhost = "smtp.gmail.com";
     private String user;
     private String password;
@@ -28,7 +28,7 @@ class GMailSender extends javax.mail.Authenticator {
         Security.addProvider(new JSSEProvider());
     }
 
-    public GMailSender(final String user, final String password) {
+    public GmailSender(final String user, final String password) {
         this.user = user;
         this.password = password;
 

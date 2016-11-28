@@ -28,6 +28,7 @@ public class Receiver extends WakefulBroadcastReceiver {
     private AlarmManager alarmMgrSMS;
     private AlarmManager alarmMgrCalendar;
     private AlarmManager alarmMgrWeather;
+    private AlarmManager alarmMgrEmail;
     private SmsManager alarmMgrUnmute;
     // The pending intent that is triggered when the alarm fires.
     private PendingIntent alarmIntent1;
@@ -35,6 +36,7 @@ public class Receiver extends WakefulBroadcastReceiver {
     private PendingIntent alarmIntentSMS;
     private PendingIntent alarmIntentCalendar;
     private PendingIntent alarmIntentWeather;
+    private PendingIntent alarmIntentEmail;
     private PendingIntent alarmIntentUnmute;
 
     @Override
@@ -82,6 +84,12 @@ public class Receiver extends WakefulBroadcastReceiver {
             Intent serviceWeather = new Intent(context, Service.class);
             serviceWeather.putExtra("WeatherAlarm", "Weather");
             startWakefulService(context, serviceWeather);
+        }
+        if(intent.getStringExtra("EmailAlarm") != null && intent.getStringExtra("EmailAlarm").equals("Email")) {
+            Intent serviceEmail = new Intent(context, Service.class);
+            serviceEmail.putExtra("EmailAlarm", "Email");
+            serviceEmail.putExtra("EmailTaskService",intent.getStringExtra("EmailTask"));
+            startWakefulService(context, serviceEmail);
         }
         // END_INCLUDE(alarm_onreceive)
     }
@@ -258,8 +266,8 @@ public class Receiver extends WakefulBroadcastReceiver {
             calendar.set(Calendar.YEAR, year);
             calendar.set(Calendar.MONTH, month);
             calendar.set(Calendar.DAY_OF_MONTH, day);
-            calendar.set(Calendar.HOUR_OF_DAY, 3);
-            calendar.set(Calendar.MINUTE, 57);
+            calendar.set(Calendar.HOUR_OF_DAY, hour);
+            calendar.set(Calendar.MINUTE, minute);
             calendar.set(Calendar.SECOND, 5);
 
             PendingIntent alarmIntent = PendingIntent.getBroadcast(context, i, intent, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -274,7 +282,7 @@ public class Receiver extends WakefulBroadcastReceiver {
         alarmMgrWeather = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, Receiver.class);
         intent.putExtra("WeatherAlarm", "Weather");
-        alarmIntentWeather = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmIntentWeather = PendingIntent.getBroadcast(context, 4, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -283,10 +291,57 @@ public class Receiver extends WakefulBroadcastReceiver {
 //        int minute = Integer.parseInt(RingerSchedulingActivity.getMinute());
 
         // Set the alarm's trigger time.
-        calendar.set(Calendar.HOUR_OF_DAY, 4);
-        calendar.set(Calendar.MINUTE, 34);
+        calendar.set(Calendar.HOUR_OF_DAY, 7);
+        calendar.set(Calendar.MINUTE, 0);
         calendar.set(Calendar.SECOND, 5);
 
         alarmMgrWeather.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntentWeather);
+    }
+
+    public void setAlarmEmail(Context context, String dt, String task) {
+        System.out.println("Current UnixTime : "+System.currentTimeMillis());
+        alarmMgrEmail = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, Receiver.class);
+        intent.putExtra("EmailAlarm", "Email");
+        intent.putExtra("EmailTask", task);
+        alarmIntentEmail = PendingIntent.getBroadcast(context, 5, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        Calendar calendar = Calendar.getInstance();
+
+        String[] DT = dt.split(" ");
+        int year = Integer.parseInt(DT[0]);
+        int _month = Integer.parseInt(DT[1]);
+        int day = Integer.parseInt(DT[2]);
+        int hour = Integer.parseInt(DT[3]);
+        int minute = Integer.parseInt(DT[4]);
+        int month;
+        if(_month==1) month = Calendar.JANUARY;
+        else if(_month==2) month = Calendar.FEBRUARY;
+        else if(_month==3) month = Calendar.MARCH;
+        else if(_month==4) month = Calendar.APRIL;
+        else if(_month==5) month = Calendar.MAY;
+        else if(_month==6) month = Calendar.JUNE;
+        else if(_month==7) month = Calendar.JULY;
+        else if(_month==8) month = Calendar.AUGUST;
+        else if(_month==9) month = Calendar.SEPTEMBER;
+        else if(_month==10) month = Calendar.OCTOBER;
+        else if(_month==11) month = Calendar.NOVEMBER;
+        else month = Calendar.DECEMBER;
+        System.out.println(year+" "+month+" "+day+" "+hour+" "+minute);
+
+        // Set the alarm's trigger time.
+        calendar.set(Calendar.YEAR, year);
+        calendar.set(Calendar.MONTH, month);
+        calendar.set(Calendar.DAY_OF_MONTH, day);
+        calendar.set(Calendar.HOUR_OF_DAY, hour);
+        calendar.set(Calendar.MINUTE, minute);
+        calendar.set(Calendar.SECOND, 5);
+        calendar.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
+
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 5, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        System.out.println(calendar.getTimeInMillis());
+
+        alarmMgrEmail.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
     }
 }

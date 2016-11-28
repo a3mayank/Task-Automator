@@ -1,5 +1,6 @@
 package com.mayankattri.mc_project_2;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
@@ -22,6 +23,7 @@ import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -30,6 +32,7 @@ import android.widget.TimePicker;
 import android.widget.Toast;
 
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -37,7 +40,7 @@ import java.util.List;
 
 public class EmailActivity extends AppCompatActivity {
 
-    GMailSender sender;
+    GmailSender sender;
     private String MESSAGE = this.getClass().getSimpleName();
     static List<EmailTask> emailTaskList = new ArrayList<>();
     private RecyclerView recyclerView;
@@ -75,14 +78,19 @@ public class EmailActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
         recyclerView.setAdapter(mAdapter);
+    }
 
+    public void execute(String taskstr) {
         // Add your mail Id and Password
-        sender = new GMailSender("mayank14063@iiitd.ac.in", "");
+        sender = new GmailSender("mayank14063@iiitd.ac.in", "");
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.
                 Builder().permitAll().build();
 
         StrictMode.setThreadPolicy(policy);
+
+        MyAsyncClass task = new MyAsyncClass();
+        task.execute(taskstr);
     }
 
     @Override
@@ -101,6 +109,12 @@ public class EmailActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
+            sender = new GmailSender("mayank14063@iiitd.ac.in", "629265028874");
+            StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.
+                    Builder().permitAll().build();
+            StrictMode.setThreadPolicy(policy);
+            MyAsyncClass emailTask = new MyAsyncClass();
+            emailTask.execute();
             return true;
         }
         if (id == R.id.MI_add) {
@@ -120,24 +134,30 @@ public class EmailActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    class MyAsyncClass extends AsyncTask<Void, Void, Void> {
+    class MyAsyncClass extends AsyncTask<String, Void, Void> {
 
         ProgressDialog pDialog;
 
-        @Override
-        protected void onPreExecute() {
-            super.onPreExecute();
-            pDialog = new ProgressDialog(EmailActivity.this);
-            pDialog.setMessage("Please wait...");
-            pDialog.show();
-        }
+//        @Override
+//        protected void onPreExecute() {
+//            super.onPreExecute();
+//            pDialog = new ProgressDialog(EmailActivity.this);
+//            pDialog.setMessage("Please wait...");
+//            pDialog.show();
+//        }
 
         @Override
-        protected Void doInBackground(Void... mApi) {
+        protected Void doInBackground(String... mApi) {
             try {
                 // Add subject, Body, your mail Id, and receiver mail Id.
                 // sendTo in last
-                sender.sendMail("MC Project", " Task Automator", "mayank14063@iiitd.ac.in", "a3mayank@gmail.com");
+                String[] emailFields = mApi[0].split("```");
+                String userEmail = "mayank14063@iiitd.ac.in";
+                System.out.println(emailFields[0]);
+                System.out.println(emailFields[1]);
+                System.out.println(emailFields[2]);
+                sender.sendMail(emailFields[1], emailFields[2], userEmail, emailFields[0]);
+//                sender.sendMail("MC Project", " Task Automator", "mayank14063@iiitd.ac.in", "a3mayank@gmail.com");
             }
             catch (Exception ex) {
 
@@ -148,17 +168,15 @@ public class EmailActivity extends AppCompatActivity {
         @Override
         protected void onPostExecute(Void result) {
             super.onPostExecute(result);
-            pDialog.cancel();
-            Toast.makeText(getApplicationContext(), "Email send", Toast.LENGTH_SHORT).show();
+//            pDialog.cancel();
+//            Toast.makeText(getApplicationContext(), "Email send", Toast.LENGTH_SHORT).show();
         }
     }
 
     public static class AddEmailTaskFragment extends DialogFragment {
 
-        public DatePicker dp_date;
-        public TimePicker tp_time;
-        public static String emailHour;
-        public static String emailMinute;
+        public static String hour;
+        public static String minute;
         public static String year;
         public static String month;
         public static String day;
@@ -216,36 +234,37 @@ public class EmailActivity extends AppCompatActivity {
             EditText et_email = (EditText) getDialog().findViewById(R.id.ET_email);
             EditText et_subject = (EditText) getDialog().findViewById(R.id.ET_subject);
             EditText et_body = (EditText) getDialog().findViewById(R.id.ET_body);
-
-            dp_date = (DatePicker) getDialog().findViewById(R.id.DP_email);
-            tp_time = (TimePicker) getDialog().findViewById(R.id.TP_email);
-
-            tp_time.setOnTimeChangedListener(new TimePicker.OnTimeChangedListener() {
-                @Override
-                public void onTimeChanged(TimePicker view, int hourOfDay, int minuteOfHour) {
-                    emailHour = String.valueOf(hourOfDay);
-                    emailMinute = String.valueOf(minuteOfHour);
-                    time = emailHour+":"+emailMinute;
-                }
-            });
+            EditText et_day = (EditText) getDialog().findViewById(R.id.ET_day);
+            EditText et_month = (EditText) getDialog().findViewById(R.id.ET_month);
+            EditText et_year = (EditText) getDialog().findViewById(R.id.ET_year);
+            EditText et_hour = (EditText) getDialog().findViewById(R.id.ET_hour);
+            EditText et_minute = (EditText) getDialog().findViewById(R.id.ET_minute);
 
             String email = "" + et_email.getText().toString();
             String subject = "" +  et_subject.getText().toString();
             String body = "" +  et_body.getText().toString();
-            emailHour = String.valueOf(tp_time.getCurrentHour());
-            emailMinute = String.valueOf(tp_time.getCurrentMinute());
-            year = String.valueOf(dp_date.getYear());
-            month = String.valueOf(dp_date.getMonth());
-            day = String.valueOf(dp_date.getDayOfMonth());
-            date = day+"-"+month+"-"+year;
+            day = "" +  et_day.getText().toString();
+            month = "" +  et_month.getText().toString();
+            year = "" +  et_year.getText().toString();
+            hour = "" +  et_hour.getText().toString();
+            minute = "" +  et_minute.getText().toString();
 
-            if (!email.equals("") && !subject.equals("") && !body.equals("")) {
+            time = hour+":"+minute;
+            date = day+"-"+month+"-"+year;
+            String dt = year+" "+month+" "+day+" "+hour+" "+minute;
+            String taskStr = email+"```"+subject+"```"+body;
+
+            if (!email.equals("") && !subject.equals("") && !body.equals("") && !day.equals("")
+                    && !month.equals("") && !year.equals("") && !hour.equals("") && !minute.equals("")) {
                 DBHandler db = new DBHandler(getActivity());
 
                 EmailTask task = new EmailTask(email, subject, body, date, time);
                 db.addEmailTask(task);
                 EmailActivity.emailTaskList.add(task);
                 EmailActivity.mAdapter.notifyDataSetChanged();
+
+                Receiver emailReceiver = new Receiver();
+                emailReceiver.setAlarmEmail(getActivity(), dt, taskStr);
 
                 Toast.makeText(getActivity().getBaseContext(), "Added", Toast.LENGTH_SHORT).show();
             }

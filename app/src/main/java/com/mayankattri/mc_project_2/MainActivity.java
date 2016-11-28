@@ -182,7 +182,7 @@ public class MainActivity extends AppCompatActivity {
         Cursor cursor = getContentResolver().query(CalendarContract.Events.CONTENT_URI,EVENTS_COLUMNS,null,null,"1",null);
         //Converting UTC epoch time to the human readable format date and time
 
-        System.out.println(System.currentTimeMillis());
+        System.out.println("Current UnixTime : "+System.currentTimeMillis());
         ArrayList<Long> unixtime = new ArrayList<>();
 
         //Traverses on events in the reverse order
@@ -196,8 +196,10 @@ public class MainActivity extends AppCompatActivity {
             //String startdate = new SimpleDateFormat("MMM dd hh:mm:ss z yyyy", Locale.ENGLISH).format(new Date (Integer.parseInt(cursor.getString(5))));
             //String enddate = new SimpleDateFormat("MMM dd hh:mm:ss z yyyy", Locale.ENGLISH).format(new Date (Integer.parseInt(cursor.getString(6))));
             if(cursor.getString(1).equals("1") || cursor.getString(1).equals("4")) {
-                System.out.println(cursor.getString(0) + " " + cursor.getString(1) + " " + cursor.getString(2) + " " + cursor.getString(3) + " " + cursor.getString(5) + " " + cursor.getString(6) + " ");
                 if (Long.parseLong(cursor.getString(5)) >= System.currentTimeMillis()) {
+                    System.out.println(cursor.getString(0) + " " + cursor.getString(1) + " " +
+                            cursor.getString(2) + " " + cursor.getString(3) + " " +
+                            cursor.getString(5) + " " + cursor.getString(6) + " ");
                     unixtime.add(Long.parseLong(cursor.getString(5)));
                 }
             }
@@ -236,39 +238,6 @@ public class MainActivity extends AppCompatActivity {
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        if (id == R.id.MI_SMS) {
-            Intent intent = new Intent(this, SmsSchedulingAcivity.class);
-            startActivity(intent);
-            return true;
-        }
-        if (id == R.id.MI_ringer) {
-            Intent intent = new Intent(this, RingerSchedulingActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        if (id == R.id.MI_brightness) {
-            Intent intent = new Intent(this, BrightnessSchedulingActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        if (id == R.id.MI_geofencing) {
-            Intent intent = new Intent(this, GeofencingActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        if (id == R.id.MI_weather) {
-            Intent intent = new Intent(this, WeatherActivity.class);
-            startActivity(intent);
-            return true;
-        }
-        if (id == R.id.MI_readSMS) {
-            return true;
-        }
 
         return super.onOptionsItemSelected(item);
     }
