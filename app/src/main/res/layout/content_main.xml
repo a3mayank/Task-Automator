@@ -249,6 +249,43 @@
 
         </android.support.v7.widget.CardView>
 
+        <android.support.v7.widget.CardView
+            style="@style/Card_View"
+            android:id="@+id/cv9"
+            card_view:cardCornerRadius="15dp"
+            card_view:contentPadding="25dp"
+            card_view:cardBackgroundColor="#c24c03"
+            card_view:cardElevation="4dp">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        style="@style/Image_View"
+                        android:background="@drawable/calendar"/>
+
+                    <ToggleButton
+                        style="@style/Toggle_Button"
+                        android:text="New ToggleButton"
+                        android:id="@+id/toggleButton5" />
+
+                </LinearLayout>
+
+                <TextView
+                    style="@style/Text_View"
+                    android:text="Send Email to anyone at your specified time." />
+
+            </LinearLayout>
+
+        </android.support.v7.widget.CardView>
+
     </LinearLayout>
 
 </ScrollView>

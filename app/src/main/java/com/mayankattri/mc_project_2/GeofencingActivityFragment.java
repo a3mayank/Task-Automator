@@ -82,6 +82,10 @@ public class GeofencingActivityFragment extends Fragment implements AddGeofenceF
                 AddGeofenceFragment dialogFragment = new AddGeofenceFragment();
                 dialogFragment.setListener(GeofencingActivityFragment.this);
                 dialogFragment.show(getActivity().getSupportFragmentManager(), "AddGeofenceFragment");
+
+                Intent myIntent = new Intent(getActivity(), MapsActivity.class);
+                myIntent.putExtra("key", "map"); //Optional parameters
+                startActivity(myIntent);
             }
         });
 

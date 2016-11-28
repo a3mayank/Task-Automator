@@ -44,6 +44,7 @@ public class MainActivity extends AppCompatActivity {
         CardView sms = (CardView) findViewById(R.id.cv4);
         CardView unmute = (CardView) findViewById(R.id.cv7);
         CardView calendar = (CardView) findViewById(R.id.cv8);
+        CardView email = (CardView) findViewById(R.id.cv9);
 
         ToggleButton tb2 = (ToggleButton) findViewById(R.id.toggleButton2);
         ToggleButton tb3 = (ToggleButton) findViewById(R.id.toggleButton3);
@@ -121,6 +122,14 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 calendar();
+            }
+        });
+
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MainActivity.this, EmailActivity.class);
+                startActivity(intent);
             }
         });
     }

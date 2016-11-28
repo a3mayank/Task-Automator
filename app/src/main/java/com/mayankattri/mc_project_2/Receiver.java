@@ -27,12 +27,14 @@ public class Receiver extends WakefulBroadcastReceiver {
     private AlarmManager alarmMgrBrightness;
     private AlarmManager alarmMgrSMS;
     private AlarmManager alarmMgrCalendar;
+    private AlarmManager alarmMgrWeather;
     private SmsManager alarmMgrUnmute;
     // The pending intent that is triggered when the alarm fires.
     private PendingIntent alarmIntent1;
     private PendingIntent alarmIntentBrightness;
     private PendingIntent alarmIntentSMS;
     private PendingIntent alarmIntentCalendar;
+    private PendingIntent alarmIntentWeather;
     private PendingIntent alarmIntentUnmute;
 
     @Override
@@ -75,6 +77,11 @@ public class Receiver extends WakefulBroadcastReceiver {
             Intent serviceCalendar = new Intent(context, Service.class);
             serviceCalendar.putExtra("CalendarAlarm", "Calendar");
             startWakefulService(context, serviceCalendar);
+        }
+        if(intent.getStringExtra("WeatherAlarm") != null && intent.getStringExtra("WeatherAlarm").equals("Weather")) {
+            Intent serviceWeather = new Intent(context, Service.class);
+            serviceWeather.putExtra("WeatherAlarm", "Weather");
+            startWakefulService(context, serviceWeather);
         }
         // END_INCLUDE(alarm_onreceive)
     }
@@ -261,5 +268,25 @@ public class Receiver extends WakefulBroadcastReceiver {
 
             alarmMgrCalendar.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntent);
         }
+    }
+
+    public void setAlarmWeather(Context context) {
+        alarmMgrWeather = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
+        Intent intent = new Intent(context, Receiver.class);
+        intent.putExtra("WeatherAlarm", "Weather");
+        alarmIntentWeather = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+//        int hour = Integer.parseInt(RingerSchedulingActivity.getHour());
+//        int minute = Integer.parseInt(RingerSchedulingActivity.getMinute());
+
+        // Set the alarm's trigger time.
+        calendar.set(Calendar.HOUR_OF_DAY, 4);
+        calendar.set(Calendar.MINUTE, 34);
+        calendar.set(Calendar.SECOND, 5);
+
+        alarmMgrWeather.setExact(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), alarmIntentWeather);
     }
 }

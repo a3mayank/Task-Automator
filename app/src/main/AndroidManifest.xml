@@ -124,6 +124,15 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="com.mayankattri.mc_project_2.MainActivity" />
         </activity>
+        <activity
+            android:name=".EmailActivity"
+            android:label="@string/title_activity_email"
+            android:parentActivityName=".MainActivity"
+            android:theme="@style/AppTheme.NoActionBar">
+            <meta-data
+                android:name="android.support.PARENT_ACTIVITY"
+                android:value="com.mayankattri.mc_project_2.MainActivity" />
+        </activity>
     </application>
 
 </manifest>

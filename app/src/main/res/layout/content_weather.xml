@@ -8,6 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.mayankattri.mc_project_2.WeatherActivity"
     tools:showIn="@layout/activity_weather">
@@ -15,7 +16,20 @@
     <TextView
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set Time to put phone on Silent Mode"
-        android:id="@+id/TV" />
+        android:text="Add City by ZIP Code"
+        android:id="@+id/TV_weather" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="number"
+        android:ems="10"
+        android:id="@+id/ET_weather" />
+
+    <Button
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Set"
+        android:id="@+id/B_weather" />
 
 </LinearLayout>

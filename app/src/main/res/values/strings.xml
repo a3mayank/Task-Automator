@@ -62,4 +62,5 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_weather">WeatherActivity</string>
     <string name="title_activity_unmute_by_sms">UnmuteBySmsActivity</string>
+    <string name="title_activity_email">EmailActivity</string>
 </resources>
