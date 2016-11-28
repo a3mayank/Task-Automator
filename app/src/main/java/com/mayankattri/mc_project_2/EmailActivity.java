@@ -29,7 +29,7 @@ public class EmailActivity extends AppCompatActivity {
 
         button = (Button) findViewById(R.id.B_email);
         // Add your mail Id and Password
-        sender = new GMailSender("mayank14063@iiitd.ac.in", "629265028874");
+        sender = new GMailSender("mayank14063@iiitd.ac.in", "");
 
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.
                 Builder().permitAll().build();
