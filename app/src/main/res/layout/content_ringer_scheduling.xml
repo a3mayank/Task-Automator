@@ -7,26 +7,70 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/blue"
     android:orientation="vertical"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.mayankattri.mc_project_2.RingerSchedulingActivity"
     tools:showIn="@layout/activity_ringer_scheduling">
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="Set Time to put phone on Silent Mode"
-        android:id="@+id/textView" />
-
-    <TimePicker
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="500dp"
-        android:id="@+id/timePicker2" />
-
-    <Button
-        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Done"
-        android:id="@+id/B_done2" />
+        android:orientation="vertical">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textColor="#fff"
+            android:textStyle="bold"
+            android:textAlignment="center"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:text="Set Time to put phone on Silent Mode"
+            android:id="@+id/textView" />
+
+        <EditText
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:inputType="number"
+            android:textColor="#ffff"
+            android:textAlignment="center"
+            android:textSize="50sp"
+            android:ems="10"
+            android:id="@+id/ET_ringer" />
+
+        <Button
+            android:layout_width="200dp"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="Select Time"
+            android:id="@+id/B_ringer" />
+
+        <!--<TimePicker-->
+            <!--android:layout_width="match_parent"-->
+            <!--android:layout_height="500dp"-->
+            <!--android:id="@+id/timePicker2" />-->
+
+        <!--<Button-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:text="Done"-->
+            <!--android:id="@+id/B_done2" />-->
+
+    </LinearLayout>
+
+    <ScrollView
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <ListView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:id="@+id/listview_ringer">
+        </ListView>
+
+    </ScrollView>
 
 </LinearLayout>

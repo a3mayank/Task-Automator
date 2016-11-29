@@ -94,20 +94,18 @@ public class Receiver extends WakefulBroadcastReceiver {
         // END_INCLUDE(alarm_onreceive)
     }
 
-    public void setAlarmRinger(Context context) {
+    public void setAlarmRinger(Context context, int key, String time) {
         alarmMgr1 = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, Receiver.class);
         intent.putExtra("RingerAlarm", "Ringer");
-        alarmIntent1 = PendingIntent.getBroadcast(context, 0, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        alarmIntent1 = PendingIntent.getBroadcast(context, key, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
 
-        int hour = Integer.parseInt(RingerSchedulingActivity.getHour());
-        int minute = Integer.parseInt(RingerSchedulingActivity.getMinute());
-
-//        ArrayList<Integer> hours = new ArrayList<>();
-//        ArrayList<Integer> minutes = new ArrayList<>();
+        String[] timeFeilds = time.split(":");
+        int hour = Integer.parseInt(timeFeilds[0]);
+        int minute = Integer.parseInt(timeFeilds[1]);
 
         // Set the alarm's trigger time.
         calendar.set(Calendar.HOUR_OF_DAY, hour);
@@ -140,7 +138,9 @@ public class Receiver extends WakefulBroadcastReceiver {
         alarmMgrBrightness = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, Receiver.class);
         intent.putExtra("BrightnessAlarm", "Brightness");
-        alarmIntentBrightness = PendingIntent.getBroadcast(context, 1, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Long key = System.currentTimeMillis();
+        int code = key.intValue();
+        alarmIntentBrightness = PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -163,7 +163,9 @@ public class Receiver extends WakefulBroadcastReceiver {
         alarmMgrSMS = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, Receiver.class);
         intent.putExtra("SMSAlarm", "SMS");
-        alarmIntentSMS = PendingIntent.getBroadcast(context, 2, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Long key = System.currentTimeMillis();
+        int code = key.intValue();
+        alarmIntentSMS = PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -270,7 +272,10 @@ public class Receiver extends WakefulBroadcastReceiver {
             calendar.set(Calendar.MINUTE, minute);
             calendar.set(Calendar.SECOND, 5);
 
-            PendingIntent alarmIntent = PendingIntent.getBroadcast(context, i, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+            Long key = System.currentTimeMillis();
+            int code = key.intValue();
+
+            PendingIntent alarmIntent = PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
             System.out.println(calendar.getTimeInMillis());
 
@@ -282,7 +287,9 @@ public class Receiver extends WakefulBroadcastReceiver {
         alarmMgrWeather = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
         Intent intent = new Intent(context, Receiver.class);
         intent.putExtra("WeatherAlarm", "Weather");
-        alarmIntentWeather = PendingIntent.getBroadcast(context, 4, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Long key = System.currentTimeMillis();
+        int code = key.intValue();
+        alarmIntentWeather = PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -338,7 +345,10 @@ public class Receiver extends WakefulBroadcastReceiver {
         calendar.set(Calendar.SECOND, 5);
         calendar.setTimeZone(TimeZone.getTimeZone("GMT+5:30"));
 
-        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, 5, intent, PendingIntent.FLAG_CANCEL_CURRENT);
+        Long key = System.currentTimeMillis();
+        int code = key.intValue();
+
+        PendingIntent alarmIntent = PendingIntent.getBroadcast(context, code, intent, PendingIntent.FLAG_CANCEL_CURRENT);
 
         System.out.println(calendar.getTimeInMillis());
 

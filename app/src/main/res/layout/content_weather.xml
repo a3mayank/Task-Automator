@@ -9,27 +9,40 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:orientation="vertical"
+    android:background="@drawable/blue"
+    android:gravity="center"
     app:layout_behavior="@string/appbar_scrolling_view_behavior"
     tools:context="com.mayankattri.mc_project_2.WeatherActivity"
     tools:showIn="@layout/activity_weather">
 
     <TextView
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add City by ZIP Code"
+        android:text="City ZIP : "
+        android:textColor="#ffff"
+        android:paddingBottom="80dp"
+        android:textSize="50sp"
+        android:textStyle="bold"
+        android:gravity="center"
         android:id="@+id/TV_weather" />
 
     <EditText
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:inputType="number"
+        android:textColor="#ffff"
+        android:textAlignment="center"
+        android:textSize="50sp"
         android:ems="10"
         android:id="@+id/ET_weather" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Set"
+        android:layout_marginTop="40dp"
+        android:text="Set This City ZIP"
+        android:textColor="#000"
+        android:textSize="20sp"
         android:id="@+id/B_weather" />
 
 </LinearLayout>

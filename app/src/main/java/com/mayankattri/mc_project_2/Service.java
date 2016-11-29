@@ -115,7 +115,7 @@ public class Service extends IntentService {
 
         NotificationCompat.Builder mBuilder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.logo)
                         .setContentTitle("SMS Sent")
                         .setStyle(new NotificationCompat.BigTextStyle()
                                 .bigText(msg))
@@ -186,7 +186,7 @@ public class Service extends IntentService {
         // Constructs the Builder object.
         NotificationCompat.Builder builder =
                 new NotificationCompat.Builder(this)
-                        .setSmallIcon(R.mipmap.ic_launcher)
+                        .setSmallIcon(R.drawable.logo)
                         .setContentTitle("Daily Weather Report")
                         .setContentText(weather)
                         .setDefaults(Notification.DEFAULT_ALL) // requires VIBRATE permission

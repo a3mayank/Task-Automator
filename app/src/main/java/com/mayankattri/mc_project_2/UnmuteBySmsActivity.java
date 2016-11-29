@@ -26,7 +26,7 @@ import java.util.Map;
 
 public class UnmuteBySmsActivity extends AppCompatActivity {
 
-    ArrayAdapter<String> adapter;
+    ArrayAdapter<String> adapterUnmute;
     public static ArrayList<String> unmuteContacts;
     EditText ET_contact;
     public static SharedPreferences prefs;
@@ -54,16 +54,16 @@ public class UnmuteBySmsActivity extends AppCompatActivity {
             }
         }
 
-        adapter = new ArrayAdapter<>(this, R.layout.list_item_unmute, R.id.text_view_unmute, unmuteContacts);
-        listView.setAdapter(adapter);
+        adapterUnmute = new ArrayAdapter<>(this, R.layout.list_item_unmute, R.id.text_view_unmute, unmuteContacts);
+        listView.setAdapter(adapterUnmute);
 
         B_Add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 String C = "+91" + ET_contact.getText().toString();
                 if (!C.equals("")) {
-                    adapter.add(C);
-                    adapter.notifyDataSetChanged();
+                    adapterUnmute.add(C);
+                    adapterUnmute.notifyDataSetChanged();
                     unmuteContacts.add(C);
                     prefs.edit().putString(C, C).apply();
                     ET_contact.setText("");
@@ -77,7 +77,7 @@ public class UnmuteBySmsActivity extends AppCompatActivity {
                 TextView tv = (TextView) view.findViewById(R.id.text_view_unmute);
                 System.out.println(tv.getText());
                 unmuteContacts.remove(tv.getText().toString());
-                adapter.remove(tv.getText().toString());
+                adapterUnmute.remove(tv.getText().toString());
                 prefs.edit().remove(tv.getText().toString()).apply();
                 return false;
             }

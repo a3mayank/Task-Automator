@@ -52,8 +52,8 @@ public class CallReceiver extends BroadcastReceiver {
 
     //Derived classes should override these to respond to specific events of interest
     protected void onIncomingCallStarted(Context ctx, String number, Date start) {
-        System.out.println("missed call from : " + number);
-        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
+//        System.out.println("missed call from : " + number);
+//        audioManager.setRingerMode(AudioManager.RINGER_MODE_NORMAL);
     }
     protected void onOutgoingCallStarted(Context ctx, String number, Date start){}
     protected void onIncomingCallEnded(Context ctx, String number, Date start, Date end){}

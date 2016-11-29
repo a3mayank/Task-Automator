@@ -3,10 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingBottom="@dimen/activity_vertical_margin"
-    android:paddingLeft="@dimen/activity_horizontal_margin"
-    android:paddingRight="@dimen/activity_horizontal_margin"
-    android:paddingTop="@dimen/activity_vertical_margin"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/fragment_all_geofences_container"
     android:background="@color/Background">
     <!--tools:context="com.mayankattri.tao.MainActivityFragment"-->
@@ -29,6 +26,7 @@
         android:id="@+id/fragment_all_geofences_geofenceRecyclerView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_marginTop="55dp"
         android:paddingBottom="@dimen/Margin.FABPadding"
         android:clipToPadding="false"
         android:overScrollMode="never"
@@ -38,10 +36,5 @@
         android:id="@+id/fragment_all_geofences_actionButton"
         style="@style/FloatingActionButton"
         android:layout_gravity="bottom|end"/>
-
-    <com.software.shell.fab.ActionButton
-        android:id="@+id/fragment_all_geofences_actionButton2"
-        style="@style/FloatingActionButton"
-        android:layout_gravity="bottom"/>
 
 </FrameLayout>

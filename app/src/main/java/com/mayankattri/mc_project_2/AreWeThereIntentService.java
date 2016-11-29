@@ -104,7 +104,7 @@ public class AreWeThereIntentService extends IntentService {
             PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
 
             Notification notification = new NotificationCompat.Builder(this)
-                    .setSmallIcon(R.mipmap.ic_launcher)
+                    .setSmallIcon(R.drawable.logo)
                     .setContentTitle(this.getResources().getString(R.string.Notification_Title))
                     .setContentText(contextText)
                     .setContentIntent(pendingNotificationIntent)

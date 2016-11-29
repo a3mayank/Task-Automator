@@ -1,5 +1,6 @@
 package com.mayankattri.mc_project_2;
 
+import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -32,6 +33,7 @@ public class WeatherActivity extends AppCompatActivity {
     static TextView tv;
     static EditText et;
     static String zip;
+    public static SharedPreferences prefs;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -45,13 +47,25 @@ public class WeatherActivity extends AppCompatActivity {
         et = (EditText) findViewById(R.id.ET_weather);
         Button b = (Button) findViewById(R.id.B_weather);
 
+        if (savedInstanceState == null || !savedInstanceState.containsKey("zip")) {
+
+        } else {
+            zip = savedInstanceState.getString("zip");
+        }
+        prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        if (prefs != null) {
+            zip = prefs.getString("zip", "110092");
+            et.setText(zip);
+        } else {
+            System.out.println("prefs is null");
+        }
+
         b.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 zip = et.getText().toString();
-                SharedPreferences.Editor editor = getSharedPreferences("weather", MODE_PRIVATE).edit();
-                editor.putString("zip", zip);
-                editor.commit();
+                prefs.edit().putString("zip", zip).apply();
+
                 Receiver weatherReceiver = new Receiver();
                 weatherReceiver.setAlarmWeather(WeatherActivity.this);
 
@@ -59,6 +73,14 @@ public class WeatherActivity extends AppCompatActivity {
                 , Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        // Called when the layout should save its state.
+        // This saves configuration and anything else that may be required to restore.
+        super.onSaveInstanceState(outState);
+        outState.putString("zip", zip);
     }
 
     public static class FetchWeatherTask extends AsyncTask<String, Void, String> {

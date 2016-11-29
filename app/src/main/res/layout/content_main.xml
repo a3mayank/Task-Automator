@@ -254,7 +254,7 @@
             android:id="@+id/cv9"
             card_view:cardCornerRadius="15dp"
             card_view:contentPadding="25dp"
-            card_view:cardBackgroundColor="#c24c03"
+            card_view:cardBackgroundColor="#33315b"
             card_view:cardElevation="4dp">
 
             <LinearLayout
@@ -269,7 +269,7 @@
 
                     <ImageView
                         style="@style/Image_View"
-                        android:background="@drawable/calendar"/>
+                        android:background="@drawable/email"/>
 
                     <ToggleButton
                         style="@style/Toggle_Button"

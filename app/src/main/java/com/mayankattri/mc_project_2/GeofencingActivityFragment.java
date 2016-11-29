@@ -1,5 +1,6 @@
 package com.mayankattri.mc_project_2;
 
+import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
@@ -79,26 +80,22 @@ public class GeofencingActivityFragment extends Fragment implements AddGeofenceF
         viewHolder.actionButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                AddGeofenceFragment dialogFragment = new AddGeofenceFragment();
-                dialogFragment.setListener(GeofencingActivityFragment.this);
-                dialogFragment.show(getActivity().getSupportFragmentManager(), "AddGeofenceFragment");
-
                 Intent myIntent = new Intent(getActivity(), MapsActivity.class);
                 myIntent.putExtra("key", "map"); //Optional parameters
-                startActivity(myIntent);
-            }
-        });
-
-        viewHolder.actionButton2.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent myIntent = new Intent(getActivity(), MapsActivity.class);
-                myIntent.putExtra("key", "map"); //Optional parameters
-                startActivity(myIntent);
+                startActivityForResult(myIntent, 1);
             }
         });
 
         refresh();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if(resultCode == Activity.RESULT_OK && requestCode == 1) {
+            AddGeofenceFragment dialogFragment = new AddGeofenceFragment();
+            dialogFragment.setListener(GeofencingActivityFragment.this);
+            dialogFragment.show(getActivity().getSupportFragmentManager(), "AddGeofenceFragment");
+        }
     }
 
     @Override
@@ -165,17 +162,15 @@ public class GeofencingActivityFragment extends Fragment implements AddGeofenceF
         ViewGroup container;
         ViewGroup emptyState;
         RecyclerView geofenceRecyclerView;
-        ActionButton actionButton, actionButton2;
+        ActionButton actionButton;
 
         public void populate(View v) {
             container = (ViewGroup) v.findViewById(R.id.fragment_all_geofences_container);
             emptyState = (ViewGroup) v.findViewById(R.id.fragment_all_geofences_emptyState);
             geofenceRecyclerView = (RecyclerView) v.findViewById(R.id.fragment_all_geofences_geofenceRecyclerView);
             actionButton = (ActionButton) v.findViewById(R.id.fragment_all_geofences_actionButton);
-            actionButton2 = (ActionButton) v.findViewById(R.id.fragment_all_geofences_actionButton2);
 
             actionButton.setImageResource(R.drawable.fab_plus_icon);
-            actionButton2.setImageResource(R.drawable.fab_plus_icon);
         }
     }
 }

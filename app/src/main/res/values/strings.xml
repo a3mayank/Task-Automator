@@ -26,7 +26,7 @@
     <string name="Label.Longitude">Longitude</string>
     <string name="Label.Radius">Radius</string>
     <string name="Label.AddGeofence">Add a Geofence</string>
-    <string name="Label.EmptyState">You haven\'t created any geofences yet. Tap the plus button to create one.\n\n\nWill we ever get there?! :]</string>
+    <string name="Label.EmptyState">You haven\'t created any geofences yet. Tap the plus button to create one.</string>
 
     <!-- Hints -->
     <string name="Hint.Name">Name for the geofence</string>
@@ -55,12 +55,12 @@
 
     <string name="closeDrawer">Navigation View</string>
     <string name="openDrawer">Navigation View Closed</string>
-    <string name="title_activity_sms_scheduling_acivity">SmsSchedulingAcivity</string>
-    <string name="title_activity_ringer_scheduling">RingerSchedulingActivity</string>
-    <string name="title_activity_brightness_scheduling">BrightnessSchedulingActivity</string>
-    <string name="title_activity_geofencing">GeofencingActivity</string>
+    <string name="title_activity_sms_scheduling_acivity">SMS Scheduling</string>
+    <string name="title_activity_ringer_scheduling">Ringer Mode Settings</string>
+    <string name="title_activity_brightness_scheduling">Brightness Settings</string>
+    <string name="title_activity_geofencing">Geofencing Mute Scheduling</string>
     <string name="title_activity_maps">Map</string>
-    <string name="title_activity_weather">WeatherActivity</string>
-    <string name="title_activity_unmute_by_sms">UnmuteBySmsActivity</string>
-    <string name="title_activity_email">EmailActivity</string>
+    <string name="title_activity_weather">Weather Notification</string>
+    <string name="title_activity_unmute_by_sms">Unmute By SMS</string>
+    <string name="title_activity_email">Email Scheduling</string>
 </resources>
